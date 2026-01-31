@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "776876278367",
-    "project_id": "upda-8dccd",
-    "storage_bucket": "upda-8dccd.firebasestorage.app"
+    "project_number": "693290122798",
+    "project_id": "flutter-rpg-97fad",
+    "storage_bucket": "flutter-rpg-97fad.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:776876278367:android:20cf691c32c115f0cf51ea",
+        "mobilesdk_app_id": "1:693290122798:android:7d485d443c6903cba469bf",
         "android_client_info": {
-          "package_name": "com.n3t.upda3"
+          "package_name": "com.example.flutter_rpg"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC2Q3FM3C1ycoR8qt3-lrZ82b5LaTnyBsk"
+          "current_key": "AIzaSyA-vHaSvq1OSMnEntM2uSdRheqkJ2ZwQXw"
         }
       ],
       "services": {
@@ -26,15 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:776876278367:android:5c4c301f5f926ccfcf51ea",
+        "mobilesdk_app_id": "1:693290122798:android:72b2ecc732093c73a469bf",
         "android_client_info": {
-          "package_name": "com.n3t.upda_flutter"
+          "package_name": "com.n3t.upda3"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC2Q3FM3C1ycoR8qt3-lrZ82b5LaTnyBsk"
+          "current_key": "AIzaSyA-vHaSvq1OSMnEntM2uSdRheqkJ2ZwQXw"
         }
       ],
       "services": {

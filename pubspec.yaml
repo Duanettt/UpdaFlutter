@@ -47,6 +47,8 @@ dependencies:
   riverpod_generator: ^3.0.3
   riverpod_annotation: ^3.0.3
   flutter_dotenv: ^6.0.0
+  firebase_core: ^4.4.0
+  firebase_messaging: ^16.1.1
 
 
 

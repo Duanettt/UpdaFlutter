@@ -41,46 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDTvT_UAf_wGiY6mTjN_DvJg4x562ZlN9I',
-    appId: '1:776876278367:web:fd6d65007e69df13cf51ea',
-    messagingSenderId: '776876278367',
-    projectId: 'upda-8dccd',
-    authDomain: 'upda-8dccd.firebaseapp.com',
-    storageBucket: 'upda-8dccd.firebasestorage.app',
+    apiKey: 'AIzaSyD1AVioeogsnSYq8hBB_gMhcRnkV8gtSDo',
+    appId: '1:693290122798:web:6ee30360210926eba469bf',
+    messagingSenderId: '693290122798',
+    projectId: 'flutter-rpg-97fad',
+    authDomain: 'flutter-rpg-97fad.firebaseapp.com',
+    storageBucket: 'flutter-rpg-97fad.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC2Q3FM3C1ycoR8qt3-lrZ82b5LaTnyBsk',
-    appId: '1:776876278367:android:20cf691c32c115f0cf51ea',
-    messagingSenderId: '776876278367',
-    projectId: 'upda-8dccd',
-    storageBucket: 'upda-8dccd.firebasestorage.app',
+    apiKey: 'AIzaSyA-vHaSvq1OSMnEntM2uSdRheqkJ2ZwQXw',
+    appId: '1:693290122798:android:72b2ecc732093c73a469bf',
+    messagingSenderId: '693290122798',
+    projectId: 'flutter-rpg-97fad',
+    storageBucket: 'flutter-rpg-97fad.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4FZHMJXutsvHOw4N7I1B1_GXGVR4w6oo',
-    appId: '1:776876278367:ios:7760e6adf6461d8ecf51ea',
-    messagingSenderId: '776876278367',
-    projectId: 'upda-8dccd',
-    storageBucket: 'upda-8dccd.firebasestorage.app',
+    apiKey: 'AIzaSyDvHg3EqVRm0kONcZWOAToCa3eToJihnhs',
+    appId: '1:693290122798:ios:d461bd6a6e5d7116a469bf',
+    messagingSenderId: '693290122798',
+    projectId: 'flutter-rpg-97fad',
+    storageBucket: 'flutter-rpg-97fad.firebasestorage.app',
     iosBundleId: 'com.n3t.upda3',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA4FZHMJXutsvHOw4N7I1B1_GXGVR4w6oo',
-    appId: '1:776876278367:ios:7760e6adf6461d8ecf51ea',
-    messagingSenderId: '776876278367',
-    projectId: 'upda-8dccd',
-    storageBucket: 'upda-8dccd.firebasestorage.app',
+    apiKey: 'AIzaSyDvHg3EqVRm0kONcZWOAToCa3eToJihnhs',
+    appId: '1:693290122798:ios:d461bd6a6e5d7116a469bf',
+    messagingSenderId: '693290122798',
+    projectId: 'flutter-rpg-97fad',
+    storageBucket: 'flutter-rpg-97fad.firebasestorage.app',
     iosBundleId: 'com.n3t.upda3',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDTvT_UAf_wGiY6mTjN_DvJg4x562ZlN9I',
-    appId: '1:776876278367:web:5d6b24456c255b07cf51ea',
-    messagingSenderId: '776876278367',
-    projectId: 'upda-8dccd',
-    authDomain: 'upda-8dccd.firebaseapp.com',
-    storageBucket: 'upda-8dccd.firebasestorage.app',
+    apiKey: 'AIzaSyD1AVioeogsnSYq8hBB_gMhcRnkV8gtSDo',
+    appId: '1:693290122798:web:85a743c56af93e72a469bf',
+    messagingSenderId: '693290122798',
+    projectId: 'flutter-rpg-97fad',
+    authDomain: 'flutter-rpg-97fad.firebaseapp.com',
+    storageBucket: 'flutter-rpg-97fad.firebasestorage.app',
   );
 }
