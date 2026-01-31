@@ -32,7 +32,7 @@ final class TopicsProvider extends $AsyncNotifierProvider<Topics, List<Topic>> {
   Topics create() => Topics();
 }
 
-String _$topicsHash() => r'c504073d269c75dde5eb743056c4bff354c5c35b';
+String _$topicsHash() => r'544a1a72efe6529aee3f4d3e8a3fc1081c31e4a2';
 
 abstract class _$Topics extends $AsyncNotifier<List<Topic>> {
   FutureOr<List<Topic>> build();
