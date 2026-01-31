@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "776876278367",
+    "project_id": "upda-8dccd",
+    "storage_bucket": "upda-8dccd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776876278367:android:20cf691c32c115f0cf51ea",
+        "android_client_info": {
+          "package_name": "com.n3t.upda3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Q3FM3C1ycoR8qt3-lrZ82b5LaTnyBsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776876278367:android:5c4c301f5f926ccfcf51ea",
+        "android_client_info": {
+          "package_name": "com.n3t.upda_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Q3FM3C1ycoR8qt3-lrZ82b5LaTnyBsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
