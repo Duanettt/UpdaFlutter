@@ -8,9 +8,9 @@ class NewsApi {
   static final String _apiKey = dotenv.env['NEWS_API_KEY'] ?? '';
   static const String _baseUrl = 'https://api.newsmesh.co/v1';
 
-  /// Searches newsmesh for articles matching [query], maps them into [Article]
+  /// Searches newsmesh for feed matching [query], maps them into [Article]
   /// objects bound to [topicId]. Returns an empty list on API errors so the
-  /// caller can still fall back to cached DB articles.
+  /// caller can still fall back to cached DB feed.
   Future<List<Article>> searchNews(String query, int topicId) async {
     final url = Uri.parse(
       '$_baseUrl/search?apiKey=$_apiKey&q=${Uri.encodeComponent(query)}&limit=25&sortBy=date_descending',

@@ -4,8 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:upda3/common/style/theme.dart';
 import 'package:upda3/data/models/article.dart';
-import 'package:upda3/features/topics/providers/topics_provider.dart';
-import 'package:upda3/features/articles/providers/articles_provider.dart';
+import 'package:upda3/features/discover/providers/topics_provider.dart';
+import 'package:upda3/features/feed/providers/articles_provider.dart';
 
 class FeedScreen extends ConsumerWidget {
   const FeedScreen({super.key});
@@ -58,7 +58,7 @@ class FeedScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'No topics selected',
+                    'No discover selected',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -67,7 +67,7 @@ class FeedScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Add topics in Discover to see news',
+                    'Add discover in Discover to see news',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.textTertiary,
@@ -102,12 +102,12 @@ class _UnifiedFeed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Fetch all articles from all topics
+    // Fetch all feed from all discover
     final allArticlesFutures = topics.map((topic) {
       return ref.watch(articlesProvider(topic.id!, topic.name));
     }).toList();
 
-    // Combine all articles
+    // Combine all feed
     final List<({Article article, String topicName})> combinedArticles = [];
     bool isLoading = false;
     Object? error;
@@ -130,7 +130,7 @@ class _UnifiedFeed extends ConsumerWidget {
 
     if (error != null && combinedArticles.isEmpty) {
       return Center(
-        child: Text('Error loading articles', style: const TextStyle(color: AppColors.error)),
+        child: Text('Error loading feed', style: const TextStyle(color: AppColors.error)),
       );
     }
 
@@ -146,7 +146,7 @@ class _UnifiedFeed extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'No articles yet',
+              'No feed yet',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

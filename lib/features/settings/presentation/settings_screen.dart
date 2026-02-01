@@ -41,7 +41,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _SettingsTile(
             icon: Icons.notifications_outlined,
             title: 'Push Notifications',
-            subtitle: 'Get notified about new articles',
+            subtitle: 'Get notified about new feed',
             trailing: Switch(
               value: true,
               onChanged: (value) {
@@ -66,14 +66,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           _SettingsTile(
             icon: Icons.cleaning_services_outlined,
             title: 'Clear Cache',
-            subtitle: 'Remove cached articles and images',
+            subtitle: 'Remove cached feed and images',
             onTap: () async {
               final confirmed = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Clear Cache?'),
                   content: const Text(
-                    'This will remove all cached articles. Your topics will not be affected.',
+                    'This will remove all cached feed. Your discover will not be affected.',
                   ),
                   actions: [
                     TextButton(

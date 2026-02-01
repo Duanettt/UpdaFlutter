@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upda3/common/style/theme.dart';
-import 'package:upda3/features/topics/providers/topics_provider.dart';
+import 'package:upda3/features/discover/providers/topics_provider.dart';
 
 class DiscoverScreen extends ConsumerWidget {
   const DiscoverScreen({super.key});
@@ -144,7 +144,7 @@ class DiscoverScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 16),
                           const Text(
-                            'No topics yet',
+                            'No discover yet',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -153,7 +153,7 @@ class DiscoverScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           const Text(
-                            'Add topics to start tracking news',
+                            'Add discover to start tracking news',
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColors.textTertiary,

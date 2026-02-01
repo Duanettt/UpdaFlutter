@@ -41,7 +41,7 @@ class AppDatabase {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE topics (
+      CREATE TABLE discover (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         createdAt INTEGER NOT NULL
@@ -49,7 +49,7 @@ class AppDatabase {
     ''');
 
     await db.execute('''
-      CREATE TABLE articles (
+      CREATE TABLE feed (
         url TEXT PRIMARY KEY,
         topicId INTEGER NOT NULL,
         title TEXT NOT NULL,

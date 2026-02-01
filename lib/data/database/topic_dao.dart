@@ -7,15 +7,15 @@ class TopicDao {
   TopicDao(this.db);
 
   Future<int> insertTopic(Topic topic) async {
-    return await db.insert('topics', topic.toMap());
+    return await db.insert('discover', topic.toMap());
   }
 
   Future<List<Topic>> getAllTopics() async {
-    final result = await db.query('topics', orderBy: 'createdAt DESC');
+    final result = await db.query('discover', orderBy: 'createdAt DESC');
     return result.map((json) => Topic.fromMap(json)).toList();
   }
 
   Future<int> deleteTopic(int id) async {
-    return await db.delete('topics', where: 'id = ?', whereArgs: [id]);
+    return await db.delete('discover', where: 'id = ?', whereArgs: [id]);
   }
 }

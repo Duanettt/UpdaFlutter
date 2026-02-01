@@ -9,7 +9,7 @@ class ArticleDao {
   Future<void> insertArticles(List<Article> articles) async {
     final batch = db.batch();
     for (var article in articles) {
-      batch.insert('articles', article.toMap(),
+      batch.insert('feed', article.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
@@ -17,7 +17,7 @@ class ArticleDao {
 
   Future<List<Article>> getArticlesForTopic(int topicId) async {
     final result = await db.query(
-      'articles',
+      'feed',
       where: 'topicId = ?',
       whereArgs: [topicId],
       orderBy: 'publishedAt DESC',

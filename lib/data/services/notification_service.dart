@@ -54,7 +54,7 @@ class NotificationService {
         'token': token,
         'createdAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),
-        'topics': [],
+        'discover': [],
       }, SetOptions(merge: true));
 
       print('✅ Token saved to Firestore successfully');
@@ -71,7 +71,7 @@ class NotificationService {
       if (token == null) return;
 
       await _firestore.collection('device_tokens').doc(token).update({
-        'topics': FieldValue.arrayUnion([
+        'discover': FieldValue.arrayUnion([
           {
             'id': topicId,
             'name': topicName,
@@ -93,7 +93,7 @@ class NotificationService {
       if (token == null) return;
 
       await _firestore.collection('device_tokens').doc(token).update({
-        'topics': FieldValue.arrayRemove([
+        'discover': FieldValue.arrayRemove([
           {
             'id': topicId,
             'name': topicName,
