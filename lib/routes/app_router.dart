@@ -72,42 +72,44 @@ class _BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
+    final currentIndex = _getCurrentIndex(location);
 
     return Container(
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.border, width: 1)),
-      ),
-      child: BottomNavigationBar(
-        backgroundColor: AppColors.background,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.textTertiary,
-        currentIndex: _getCurrentIndex(location),
-        onTap: (index) => _onTap(context, index),
-        type: BottomNavigationBarType.fixed,
-        elevation: 0,
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore_outlined, size: 24),
-            activeIcon: Icon(Icons.explore, size: 24),
-            label: 'DISCOVER',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.article_outlined, size: 24),
-            activeIcon: Icon(Icons.article, size: 24),
-            label: 'FEED',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined, size: 24),
-            activeIcon: Icon(Icons.settings, size: 24),
-            label: 'SETTINGS',
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, -4),
           ),
         ],
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _NavItem(
+                icon: Icons.explore_outlined,
+                isSelected: currentIndex == 0,
+                onTap: () => _onTap(context, 0),
+              ),
+              _NavItem(
+                icon: Icons.article_outlined,
+                isSelected: currentIndex == 1,
+                onTap: () => _onTap(context, 1),
+              ),
+              _NavItem(
+                icon: Icons.settings_outlined,
+                isSelected: currentIndex == 2,
+                onTap: () => _onTap(context, 2),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -133,5 +135,34 @@ class _BottomNav extends StatelessWidget {
         context.go(settingsPath);
         break;
     }
+  }
+}
+
+/// Individual navigation item with icon and selection state
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.icon,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        child: Icon(
+          icon,
+          size: 28,
+          color: isSelected ? Colors.white : Colors.grey.shade600,
+        ),
+      ),
+    );
   }
 }
