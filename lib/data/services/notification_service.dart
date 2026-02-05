@@ -67,8 +67,15 @@ class NotificationService {
   /// Associates a topic with this device's token
   Future<void> subscribeToTopic(int topicId, String topicName) async {
     try {
+      print('🔔 SUBSCRIBING to topic: $topicName (ID: $topicId)');
+
       String? token = await _messaging.getToken();
-      if (token == null) return;
+      if (token == null) {
+        print('❌ No FCM token available');
+        return;
+      }
+
+      print('✅ FCM Token: $token');
 
       await _firestore.collection('device_tokens').doc(token).update({
         'discover': FieldValue.arrayUnion([
@@ -80,9 +87,10 @@ class NotificationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
 
-      print('Subscribed to topic: $topicName');
-    } catch (e) {
-      print('Error subscribing to topic: $e');
+      print('✅ Successfully subscribed to topic: $topicName');
+    } catch (e, stackTrace) {
+      print('❌ Error subscribing to topic: $e');
+      print('Stack trace: $stackTrace');
     }
   }
 
