@@ -32,14 +32,18 @@ class Topics extends _$Topics {
   Future<void> deleteTopic(int id) async {
     final db = ref.read(databaseProvider);
 
-    // Get the topic name before deleting so we can unsubscribe
-    final topics = await db.topicDao.getAllTopics();
-    final topic = topics.firstWhere((t) => t.id == id);
+    try {
+      // Get the topic name before deleting
+      final topics = await db.topicDao.getAllTopics();
+      final topic = topics.firstWhere((t) => t.id == id);
 
-    await db.topicDao.deleteTopic(id);
+      await db.topicDao.deleteTopic(id);
 
-    // Unsubscribe from notifications for this topic
-    await _notificationService.unsubscribeFromTopic(id, topic.name);
+      // Unsubscribe from notifications for this topic
+      await _notificationService.unsubscribeFromTopic(id, topic.name);
+    } catch (e) {
+      print('Error deleting topic: $e');
+    }
 
     ref.invalidateSelf();
   }

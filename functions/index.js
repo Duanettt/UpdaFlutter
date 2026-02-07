@@ -61,7 +61,7 @@ exports.testNotifications = onRequest(async (req, res) => {
 });
 
 exports.checkNewArticles = onSchedule(
-    "every 1 minutes",
+    "every 4 hours",
     async (event) => {
       console.log("🔍 Starting article check...");
 

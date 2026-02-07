@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:upda3/common/style/theme.dart';
 import 'package:upda3/routes/app_router.dart';
 import 'data/services/notification_service.dart';
@@ -30,20 +31,53 @@ void main() async {
   // Initialize notifications & save FCM token to Firestore
   final notificationService = NotificationService();
   await notificationService.initializeAndSaveToken();
+  await notificationService.initializeLocalNotifications();
+
+  FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+    print('🔄 Token refreshed: $newToken');
+    final notificationService = NotificationService();
+    await notificationService.initializeAndSaveToken();
+  });
 
   // Handle foreground messages (app is open)
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     print('Foreground message: ${message.notification?.title}');
-    // TODO: Show local notification using flutter_local_notifications
+    await notificationService.showLocalNotification(message);
   });
 
   // Handle notification taps (app is in background)
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     print('Notification tapped: ${message.data}');
-    // TODO: Navigate to specific article/topic based on message.data
+    _handleNotificationTap(message);
   });
 
+  // Check if app was opened from a notification (app was terminated)
+  final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    print('App opened from notification: ${initialMessage.data}');
+    _handleNotificationTap(initialMessage);
+  }
+
   runApp(const ProviderScope(child: MyApp()));
+}
+
+/// Handle notification tap - open article URL in browser
+Future<void> _handleNotificationTap(RemoteMessage message) async {
+  final articleUrl = message.data['articleUrl'];
+
+  if (articleUrl != null && articleUrl.isNotEmpty) {
+    try {
+      final uri = Uri.parse(articleUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        print('Opened article: $articleUrl');
+      } else {
+        print('Cannot launch URL: $articleUrl');
+      }
+    } catch (e) {
+      print('Error opening article: $e');
+    }
+  }
 }
 
 /// Main app widget
