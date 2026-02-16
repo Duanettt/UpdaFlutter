@@ -61,7 +61,7 @@ exports.testNotifications = onRequest(async (req, res) => {
 });
 
 exports.checkNewArticles = onSchedule(
-    "every 30 minutes",
+    "every 1 hour",
     async (event) => {
       console.log("🔍 Starting article check...");
 
@@ -84,13 +84,15 @@ exports.checkNewArticles = onSchedule(
           const discover = data.discover || [];
 
           discover.forEach((topic) => {
-            if (!topicSubscriptions[topic.id]) {
-              topicSubscriptions[topic.id] = {
+            const topicKey = topic.name.toLowerCase().trim();
+
+            if (!topicSubscriptions[topicKey]) {
+              topicSubscriptions[topicKey] = {
                 name: topic.name,
                 tokens: [],
               };
             }
-            topicSubscriptions[topic.id].tokens.push(token);
+            topicSubscriptions[topicKey].tokens.push(token);
           });
         });
 
@@ -100,11 +102,11 @@ exports.checkNewArticles = onSchedule(
         const apiKey = gnewsApiKey.value();
         const promises = [];
 
-        for (const [topicId, topicData] of
+        for (const [topicKey, topicData] of
           Object.entries(topicSubscriptions)) {
           promises.push(
               checkTopicAndNotify(
-                  topicId,
+                  topicKey,
                   topicData.name,
                   topicData.tokens,
                   apiKey,
@@ -127,7 +129,7 @@ exports.checkNewArticles = onSchedule(
 
 /**
  * Check topic for new articles and send notifications
- * @param {string} topicId
+ * @param {string} topicKey
  * @param {string} topicName
  * @param {Array} tokens
  * @param {string} apiKey
@@ -136,7 +138,7 @@ exports.checkNewArticles = onSchedule(
  * @return {Promise<void>}
  */
 async function checkTopicAndNotify(
-    topicId,
+    topicKey,
     topicName,
     tokens,
     apiKey,
@@ -148,17 +150,16 @@ async function checkTopicAndNotify(
 
     const topicDocRef = db
         .collection("last_notifications")
-        .doc(topicId.toString());
+        .doc(topicKey);
     const topicDoc = await topicDocRef.get();
     const lastData = topicDoc.exists ? topicDoc.data() : null;
     const lastArticleUrl = lastData ? lastData.lastArticleUrl : null;
 
-    // Clean topic name: remove special characters that break GNews search
     const cleanTopic = topicName.replace(/&/g, "AND")
-    .replace(/[^\w\s]/g, " ")
-    .trim();
+        .replace(/[^\w\s]/g, " ")
+        .trim();
 
-    const encodedTopic = encodeURIComponent(cleanTopic);
+    const encodedTopic = encodeURIComponent(`"${cleanTopic}"`);
     const url = `https://gnews.io/api/v4/search?q=${encodedTopic}` +
       `&lang=en&max=5&sortby=publishedAt&apikey=${apiKey}`;
 
@@ -181,6 +182,19 @@ async function checkTopicAndNotify(
 
     const latestArticle = articles[0];
 
+    const titleLower = latestArticle.title.toLowerCase();
+    const topicLower = topicName.toLowerCase();
+    const topicWords = topicLower.split(/\s+/);
+
+    const hasTopicMatch = topicWords.some((word) =>
+      word.length > 2 && titleLower.includes(word),
+    );
+
+    if (!hasTopicMatch) {
+      console.log(`❌ Article doesn't match topic ${topicName}, skipping`);
+      return;
+    }
+
     if (latestArticle.url === lastArticleUrl) {
       console.log(`No new articles for ${topicName}`);
       return;
@@ -190,14 +204,13 @@ async function checkTopicAndNotify(
         `🆕 New article for ${topicName}: ${latestArticle.title}`,
     );
 
-    // Create individual messages for each token
     const messages = tokens.map((token) => ({
       notification: {
         title: topicName,
         body: latestArticle.title,
       },
       data: {
-        topicId: topicId.toString(),
+        topicId: topicKey,
         topicName: topicName,
         articleUrl: latestArticle.url,
       },
@@ -211,12 +224,29 @@ async function checkTopicAndNotify(
 
     if (result.failureCount > 0) {
       console.log(`⚠️ ${result.failureCount} notifications failed`);
+
+      const tokensToDelete = [];
       result.responses.forEach((resp, idx) => {
         if (!resp.success) {
+          const errorCode = resp.error?.code;
           const errorMsg = resp.error ? resp.error.message : "Unknown error";
-          console.log(`Failed token ${idx}: ${errorMsg}`);
+          console.log(`Failed token ${idx}: ${errorMsg} (${errorCode})`);
+
+          if (errorCode === "messaging/registration-token-not-registered" ||
+              errorCode === "messaging/invalid-registration-token") {
+            tokensToDelete.push(tokens[idx]);
+          }
         }
       });
+
+      if (tokensToDelete.length > 0) {
+        const batch = db.batch();
+        for (const invalidToken of tokensToDelete) {
+          batch.delete(db.collection("device_tokens").doc(invalidToken));
+        }
+        await batch.commit();
+        console.log(`🗑️ Deleted ${tokensToDelete.length} invalid tokens`);
+      }
     }
 
     await topicDocRef.set({

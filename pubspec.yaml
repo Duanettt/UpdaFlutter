@@ -54,6 +54,8 @@ dependencies:
   package_info_plus: ^9.0.0
   flutter_launcher_icons: ^0.14.4
   flutter_local_notifications: ^20.0.0
+  flutter_slidable: ^4.0.3
+  cached_network_image: ^3.4.1
 
 
 
